@@ -1,17 +1,21 @@
 {
-  "name": "ff-personal",
-  "type": "module",
-  "version": "0.0.1",
-  "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
-    "build": "astro check && astro build",
-    "preview": "astro preview",
-    "astro": "astro"
-  },
-  "dependencies": {
-    "astro": "^4.14.5",
-    "@astrojs/check": "^0.9.3",
-    "typescript": "^5.5.4"
-  }
+    "name": "ff-personal",
+    "type": "module",
+    "version": "0.0.1",
+    "scripts": {
+        "dev": "astro dev",
+        "start": "astro dev",
+        "build": "astro check && astro build",
+        "preview": "astro preview",
+        "astro": "astro"
+    },
+    "dependencies": {
+        "@astrojs/check": "^0.9.3",
+        "@astrojs/cloudflare": "^11.0.4",
+        "astro": "^4.14.5",
+        "google-auth-library": "^9.14.0",
+        "google-spreadsheet": "^4.1.2",
+        "notyf": "^3.10.0",
+        "typescript": "^5.5.4"
+    }
 }
