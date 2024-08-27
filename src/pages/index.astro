@@ -4,65 +4,10 @@ import Layout from '@/layouts/Layout.astro'
 
 <Layout title="FF Franco">
     <main>
-        <form action="" id="form">
-            <label for="concept">
-                Concepto de compra
-                <input type="text" name="concept" id="concept" />
-            </label>
-
-            <label for="calendar">
-                Fecha
-                <br />
-                <input type="date" name="shoppingDate" id="calendar" />
-            </label>
-
-            <label for="total">
-                Importe
-                <input type="tel" name="totalAmount" id="total" />
-            </label>
-
-            <label for="quotas">
-                Nº de cuotas
-                <input type="tel" name="quotas" id="quotas" />
-            </label>
-
-            <button type="submit" class="send-btn">REGISTRAR</button>
-            <button type="reset" class="reset-btn">CARGAR NUEVO</button>
-        </form>
+        <a href="/ingreso">INGRESO</a>
+        <a href="/egreso">EGRESO</a>
     </main>
 </Layout>
-
-<script>
-    import { $ } from '@/lib/dom-selector'
-
-    const $form = $('#form') as HTMLFormElement
-    const $conceptInput = $('#concept') as HTMLInputElement
-    const $resetBtn = $('.reset-btn') as HTMLButtonElement
-
-    const handleSubmit = async (e: SubmitEvent) => {
-        e.preventDefault()
-
-        const formData = new FormData(e.target as HTMLFormElement)
-
-        const res = await fetch('/api/purchase', {
-            method: 'POST',
-            body: formData
-        })
-
-        if (!res.ok) {
-            console.log('Error')
-            return
-        }
-
-        $form.reset()
-        $conceptInput.focus()
-    }
-
-    $form.addEventListener('submit', handleSubmit)
-    $resetBtn.addEventListener('click', () => {
-        $('#concept')?.focus()
-    })
-</script>
 
 <style>
     form {

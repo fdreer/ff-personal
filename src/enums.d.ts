@@ -4,7 +4,8 @@ enum Purchase {
     TOTAL_AMOUNT = 'IMPORTE_TOTAL',
     NUMBER_QUOTA = 'N_CUOTA',
     AMOUNT_QUOTA = 'MONTO_CUOTA',
-    PAY_QUOTA_DATE = 'FECHA_PAGO_CUOTA'
+    PAY_QUOTA_DATE = 'FECHA_PAGO_CUOTA',
+    IS_PAY = 'SI' | 'NO'
 }
 
 enum Income {

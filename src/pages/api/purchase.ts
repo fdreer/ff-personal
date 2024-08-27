@@ -11,51 +11,74 @@ function calculatePayQuotaDate(baseDate: string, monthsToAdd: number): string {
 
 export const POST: APIRoute = async ({ request }) => {
     const data = await request.formData()
-    const concept = data.get('concept') as string
-    const shoppingDate = data.get('shoppingDate') as string
-    const totalAmount = data.get('totalAmount') as string
-    const quotas = Number(data.get('quotas'))
+    const concept = data.get('concept') as string | null
+    const shoppingDate = data.get('shoppingDate') as string | null
+    const totalAmount = data.get('totalAmount') as string | null
+    const condition = data.get('condition') as string | null
 
-    // TODO: ACÁ DEBERÍAMOS VALIDAR QUE LOS DATOS INGRESADOS ESTÁN BIEN
-
-    if (!concept || !shoppingDate || !totalAmount || !quotas) {
+    if (!concept || !shoppingDate || !totalAmount || !condition) {
         return new Response(undefined, { status: 400 })
     }
 
-    // TODO:
-    // 1. Validar con zod o de otra manera todas las propiedades que se envian del front
-    // FECHA_PRIMER_CUOTA = primer dia del mes siguiente a la compra
-    // Averiguar cuando se paga la primer cuota. Que dia del mes????
-
     try {
         // console.time('Save')
+        // CONTADO
+        // condition = "contado" y quotas = undefined
 
-        const parsedTotalAmount = Number(totalAmount)
-        const amountQuotaValue = (parsedTotalAmount / quotas).toLocaleString(
-            'es-ES',
-            {
-                useGrouping: false
+        // FINANCIADO
+        // condition = "financiado" y quotas = 3, 6, 12
+        if (condition === 'financiado') {
+            // TODO: deberiamos validar que "quotas sea un número"
+            const quotas = Number(data.get('quotas'))
+
+            if (!quotas) {
+                return new Response(undefined, { status: 432 })
             }
-        )
 
-        const purchases: Purchase[] = Array.from(
-            { length: quotas },
-            (_, i) => ({
-                concept,
-                shoppingDate,
-                totalAmount,
-                numberQuota: String(i + 1),
-                amountQuota: amountQuotaValue,
-                payQuotaDate: calculatePayQuotaDate(shoppingDate, i + 1)
+            const parsedTotalAmount = Number(totalAmount)
+            const amountQuotaValue = (
+                parsedTotalAmount / quotas
+            ).toLocaleString('es-ES', {
+                useGrouping: false
             })
-        )
 
-        // console.log(purchases)
+            const purchases: Purchase[] = Array.from(
+                { length: quotas },
+                (_, i) => ({
+                    concept,
+                    shoppingDate,
+                    totalAmount,
+                    numberQuota: String(i + 1),
+                    amountQuota: amountQuotaValue,
+                    payQuotaDate: calculatePayQuotaDate(shoppingDate, i + 1),
+                    isPay: 'NO'
+                })
+            )
 
-        await savePurchases(purchases)
-        return new Response(undefined, { status: 201 })
+            await savePurchases(purchases)
+            return new Response(undefined, { status: 201 })
+        }
+
+        if (condition === 'contado') {
+            // Si condition === "contado", entonces payQuotaDate = shoppingDate
+
+            const purchases: Purchase[] = [
+                {
+                    concept,
+                    shoppingDate,
+                    totalAmount,
+                    numberQuota: '1',
+                    amountQuota: totalAmount,
+                    payQuotaDate: shoppingDate,
+                    isPay: 'SI'
+                }
+            ]
+            await savePurchases(purchases)
+            return new Response(undefined, { status: 201 })
+        }
 
         // console.timeEnd('Save')
+        return new Response(undefined, { status: 500 })
     } catch (error) {
         console.log(error)
         return new Response(undefined, { status: 500 })
