@@ -1,4 +1,4 @@
-import doc from '@/sheets/index'
+import doc from '@/services/sheets/index'
 import type { Income, Purchase } from '@/types'
 
 export const savePurchases = async (purchases: Purchase[]) => {

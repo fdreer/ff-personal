@@ -1,4 +1,6 @@
-import { saveIncome } from '@/sheets/ff'
+export const prerender = false
+
+import { saveIncome } from '@/services/sheets/ff'
 import type { APIRoute } from 'astro'
 
 export const POST: APIRoute = async ({ request }) => {

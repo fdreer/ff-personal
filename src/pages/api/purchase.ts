@@ -1,4 +1,6 @@
-import { savePurchases } from '@/sheets/ff'
+export const prerender = false
+
+import { savePurchases } from '@/services/sheets/ff'
 import type { Purchase } from '@/types'
 import type { APIRoute } from 'astro'
 
