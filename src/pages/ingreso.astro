@@ -1,4 +1,5 @@
 ---
+import Button from '@/components/Button.astro'
 import Layout from '@/layouts/Layout.astro'
 ---
 
@@ -20,8 +21,10 @@ import Layout from '@/layouts/Layout.astro'
                 <input type="tel" name="totalAmount" id="total" />
             </label>
 
-            <button type="submit" class="send-btn">REGISTRAR</button>
-            <button type="reset" class="reset-btn">CARGAR NUEVO</button>
+            <Button type="submit" color="green">REGISTRAR</Button>
+            <Button type="reset" color="blue" id="reset-btn"
+                >CARGAR NUEVO</Button
+            >
         </form>
     </main>
 </Layout>
@@ -31,7 +34,7 @@ import Layout from '@/layouts/Layout.astro'
 
     const $form = $('#form') as HTMLFormElement
     const $conceptInput = $('#concept') as HTMLInputElement
-    const $resetBtn = $('.reset-btn') as HTMLButtonElement
+    const $resetBtn = $('#reset-btn') as HTMLButtonElement
 
     const handleSubmit = async (e: SubmitEvent) => {
         e.preventDefault()
@@ -75,36 +78,5 @@ import Layout from '@/layouts/Layout.astro'
 
         width: 100%;
         padding: 10px;
-    }
-
-    button {
-        border: none;
-        border-radius: 4px;
-
-        padding: 10px;
-        cursor: pointer;
-    }
-
-    .send-btn {
-        background-color: #3dc763;
-    }
-
-    .reset-btn {
-        background-color: #478aef;
-    }
-
-    .load {
-        display: flex;
-        justify-content: center;
-    }
-
-    .res-msg {
-        font-size: 1.5rem;
-        font-weight: 500;
-    }
-
-    .error {
-        color: rgb(226, 38, 77);
-        text-decoration: underline;
     }
 </style>

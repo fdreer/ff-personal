@@ -1,0 +1,32 @@
+---
+interface Props {
+    type: 'submit' | 'reset' | 'button' | null | undefined
+    color: 'green' | 'blue'
+    id?: string
+}
+
+const { type, color, id } = Astro.props
+---
+
+<button type={type} class={color} id={id}>
+    <slot />
+</button>
+
+<style>
+    button {
+        border: none;
+        border-radius: 4px;
+
+        padding: 10px;
+        cursor: pointer;
+        color: black;
+    }
+
+    .green {
+        background-color: #3dc763;
+    }
+
+    .blue {
+        background-color: #478aef;
+    }
+</style>
