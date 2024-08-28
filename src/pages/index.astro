@@ -4,58 +4,27 @@ import Layout from '@/layouts/Layout.astro'
 
 <Layout title="FF Franco">
     <main>
-        <a href="/ingreso">INGRESO</a>
-        <a href="/egreso">EGRESO</a>
+        <section>
+            <a href="/ingreso">INGRESO</a>
+            <a href="/egreso">EGRESO</a>
+        </section>
+        <section>
+            <iframe
+                src="https://docs.google.com/spreadsheets/d/1x-cvoqAnvVfzxM9gF6k7mUfmV2eKCOVmYJK3t_kIsKc/pubhtml?gid=2027687483&single=true&widget=true&headers=false"
+            ></iframe>
+        </section>
     </main>
 </Layout>
 
 <style>
-    form {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-        max-width: 380px;
-        margin: 0 auto;
-        font-size: 1.3rem;
-        font-weight: 500;
+    iframe {
+        width: 520px;
+        height: 220px;
     }
-
-    input {
-        border: none;
-        border-radius: 4px;
-
-        width: 100%;
-        padding: 10px;
-    }
-
-    button {
-        border: none;
-        border-radius: 4px;
-
-        padding: 10px;
-        cursor: pointer;
-    }
-
-    .send-btn {
-        background-color: #3dc763;
-    }
-
-    .reset-btn {
-        background-color: #478aef;
-    }
-
-    .load {
-        display: flex;
-        justify-content: center;
-    }
-
-    .res-msg {
-        font-size: 1.5rem;
-        font-weight: 500;
-    }
-
-    .error {
-        color: rgb(226, 38, 77);
-        text-decoration: underline;
+    @media (max-width: 768px) {
+        iframe {
+            width: 100%;
+            max-width: 520px;
+        }
     }
 </style>
