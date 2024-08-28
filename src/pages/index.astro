@@ -17,10 +17,27 @@ import Layout from '@/layouts/Layout.astro'
 </Layout>
 
 <style>
+    a {
+        border: none;
+        border-radius: 4px;
+        padding: 10px;
+
+        cursor: pointer;
+        text-decoration: none;
+        font-weight: 600;
+        color: rgb(255, 255, 255);
+        background-color: #478aef;
+    }
+
+    section {
+        padding: 20px 0;
+    }
+
     iframe {
         width: 520px;
         height: 220px;
     }
+
     @media (max-width: 768px) {
         iframe {
             width: 100%;
