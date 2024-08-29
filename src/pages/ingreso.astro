@@ -18,7 +18,12 @@ import Layout from '@/layouts/Layout.astro'
 
             <label for="total">
                 Importe
-                <input type="tel" name="totalAmount" id="total" />
+                <input
+                    type="tel"
+                    name="totalAmount"
+                    id="total"
+                    autocomplete="off"
+                />
             </label>
 
             <Button type="submit" color="green">REGISTRAR</Button>

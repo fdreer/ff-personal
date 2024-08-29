@@ -8,7 +8,12 @@ import Layout from '@/layouts/Layout.astro'
         <form action="" id="form">
             <label for="concept">
                 Concepto de egreso
-                <input type="text" name="concept" id="concept" />
+                <input
+                    type="text"
+                    name="concept"
+                    id="concept"
+                    autocomplete="off"
+                />
             </label>
 
             <label for="calendar">
@@ -18,7 +23,12 @@ import Layout from '@/layouts/Layout.astro'
 
             <label for="total">
                 Importe
-                <input type="tel" name="totalAmount" id="total" />
+                <input
+                    type="tel"
+                    name="totalAmount"
+                    id="total"
+                    autocomplete="off"
+                />
             </label>
 
             <label for="condition">
@@ -31,7 +41,12 @@ import Layout from '@/layouts/Layout.astro'
 
             <label for="quotas" id="quotasSection" style="display: none;">
                 Nº de cuotas
-                <input type="tel" name="quotas" id="quotas" />
+                <input
+                    type="tel"
+                    name="quotas"
+                    id="quotas"
+                    autocomplete="off"
+                />
             </label>
 
             <Button type="submit" color="green">REGISTRAR</Button>
