@@ -19,7 +19,8 @@ export const POST: APIRoute = async ({ request }) => {
         await saveIncome({
             concept,
             incomeDate,
-            totalAmount
+            totalAmount,
+            isCollect: 'SI'
         })
 
         // console.timeEnd('Save')

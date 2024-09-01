@@ -16,4 +16,5 @@ export type Income = {
     incomeDate: string
     concept: string
     totalAmount: string
+    isCollect: 'SI' | 'NO'
 }

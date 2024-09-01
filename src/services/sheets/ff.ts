@@ -33,7 +33,8 @@ export const saveIncome = async (income: Income) => {
     await sheet.addRow({
         FECHA_INGRESO: income.incomeDate,
         CONCEPTO: income.concept,
-        IMPORTE_TOTAL: income.totalAmount
+        IMPORTE_TOTAL: income.totalAmount,
+        ESTA_COBRADO: income.isCollect
     })
 
     return
