@@ -40,29 +40,62 @@ import Layout from '@/layouts/Layout.astro'
     const $form = $('#form') as HTMLFormElement
     const $conceptInput = $('#concept') as HTMLInputElement
     const $resetBtn = $('#reset-btn') as HTMLButtonElement
+    const $totalInput = $('#total') as HTMLInputElement
+
+    const formatNumber = (amount: string) => {
+        return amount.replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+    }
+
+    const cleanNumber = (value: string) => {
+        const cleanedValue = value.replace(/\./g, '')
+        return isNaN(Number(cleanedValue)) ? '' : cleanedValue
+    }
 
     const handleSubmit = async (e: SubmitEvent) => {
         e.preventDefault()
 
-        const formData = new FormData(e.target as HTMLFormElement)
-
-        const res = await fetch('/api/income', {
-            method: 'POST',
-            body: formData
-        })
-
-        if (!res.ok) {
-            console.log('Error')
+        const totalAmountValue = cleanNumber($totalInput.value)
+        if (!totalAmountValue) {
+            console.error('Importe no válido')
+            alert('Por favor, ingrese un importe válido.')
+            $totalInput.focus()
             return
         }
 
-        $form.reset()
-        $conceptInput.focus()
+        $totalInput.value = totalAmountValue
+
+        const formData = new FormData($form)
+
+        try {
+            const res = await fetch('/api/income', {
+                method: 'POST',
+                body: formData
+            })
+
+            if (!res.ok) throw new Error('Error en la respuesta del servidor')
+
+            $form.reset()
+            $conceptInput.focus()
+        } catch (error) {
+            console.error('Error al enviar el formulario:', error)
+            alert(
+                'Hubo un error al registrar el ingreso. Por favor, intente de nuevo.'
+            )
+        }
     }
+
+    $totalInput.addEventListener('input', e => {
+        const input = e.target as HTMLInputElement
+
+        if (input.value === '0') input.value = ''
+
+        const value = input.value.replace(/\D/g, '')
+        input.value = formatNumber(value)
+    })
 
     $form.addEventListener('submit', handleSubmit)
     $resetBtn.addEventListener('click', () => {
-        $('#concept')?.focus()
+        $conceptInput.focus()
     })
 </script>
 

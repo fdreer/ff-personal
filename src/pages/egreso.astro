@@ -64,26 +64,50 @@ import Layout from '@/layouts/Layout.astro'
     const $conceptInput = $('#concept') as HTMLInputElement
     const $resetBtn = $('#reset-btn') as HTMLButtonElement
     const $conditionSelect = $('#condition') as HTMLSelectElement
+    const $totalInput = $('#total') as HTMLInputElement
     const $quotasSection = $('#quotasSection') as HTMLLabelElement
+
+    const formatNumber = (amount: string) => {
+        return amount.replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+    }
+
+    const cleanNumber = (value: string) => {
+        const cleanedValue = value.replace(/\./g, '')
+        return isNaN(Number(cleanedValue)) ? '' : cleanedValue
+    }
 
     const handleSubmit = async (e: SubmitEvent) => {
         e.preventDefault()
 
-        const formData = new FormData(e.target as HTMLFormElement)
-
-        const res = await fetch('/api/purchase', {
-            method: 'POST',
-            body: formData
-        })
-
-        if (!res.ok) {
-            console.log('Error')
+        const totalAmountValue = cleanNumber($totalInput.value)
+        if (!totalAmountValue) {
+            console.error('Importe no válido')
+            alert('Por favor, ingrese un importe válido.')
+            $totalInput.focus()
             return
         }
 
-        $form.reset()
-        $quotasSection.style.display = 'none'
-        $conceptInput.focus()
+        $totalInput.value = totalAmountValue
+
+        const formData = new FormData(e.target as HTMLFormElement)
+
+        try {
+            const res = await fetch('/api/purchase', {
+                method: 'POST',
+                body: formData
+            })
+
+            if (!res.ok) throw new Error('Error en la respuesta del servidor')
+
+            $form.reset()
+            $quotasSection.style.display = 'none'
+            $conceptInput.focus()
+        } catch (error) {
+            console.error('Error al enviar el formulario:', error)
+            alert(
+                'Hubo un error al registrar el ingreso. Por favor, intente de nuevo.'
+            )
+        }
     }
 
     const handleConditionChange = (e: Event) => {
@@ -95,6 +119,14 @@ import Layout from '@/layouts/Layout.astro'
         }
     }
 
+    $totalInput.addEventListener('input', e => {
+        const input = e.target as HTMLInputElement
+
+        if (input.value === '0') input.value = ''
+
+        const value = input.value.replace(/\D/g, '')
+        input.value = formatNumber(value)
+    })
     $form.addEventListener('submit', handleSubmit)
     $resetBtn.addEventListener('click', () => {
         $('#concept')?.focus()
