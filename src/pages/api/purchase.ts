@@ -24,13 +24,7 @@ export const POST: APIRoute = async ({ request }) => {
 
     try {
         // console.time('Save')
-        // CONTADO
-        // condition = "contado" y quotas = undefined
-
-        // FINANCIADO
-        // condition = "financiado" y quotas = 3, 6, 12
         if (condition === 'financiado') {
-            // TODO: deberiamos validar que "quotas sea un número"
             const quotas = Number(data.get('quotas'))
 
             if (!quotas) {
@@ -52,8 +46,7 @@ export const POST: APIRoute = async ({ request }) => {
                     totalAmount,
                     numberQuota: String(i + 1),
                     amountQuota: amountQuotaValue,
-                    payQuotaDate: calculatePayQuotaDate(shoppingDate, i + 1),
-                    isPay: 'NO'
+                    payQuotaDate: calculatePayQuotaDate(shoppingDate, i + 1)
                 })
             )
 
@@ -62,8 +55,6 @@ export const POST: APIRoute = async ({ request }) => {
         }
 
         if (condition === 'contado') {
-            // Si condition === "contado", entonces payQuotaDate = shoppingDate
-
             const purchases: Purchase[] = [
                 {
                     concept,
@@ -71,8 +62,7 @@ export const POST: APIRoute = async ({ request }) => {
                     totalAmount,
                     numberQuota: '1',
                     amountQuota: totalAmount,
-                    payQuotaDate: shoppingDate,
-                    isPay: 'SI'
+                    payQuotaDate: shoppingDate
                 }
             ]
             await savePurchases(purchases)

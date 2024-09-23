@@ -5,7 +5,6 @@ export type Purchase = {
     numberQuota: string
     amountQuota?: string
     payQuotaDate?: string
-    isPay: 'SI' | 'NO'
 }
 
 export type PurchaseSheets = {
@@ -16,5 +15,4 @@ export type Income = {
     incomeDate: string
     concept: string
     totalAmount: string
-    isCollect: 'SI' | 'NO'
 }
